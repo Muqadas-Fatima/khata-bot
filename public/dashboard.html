@@ -1,0 +1,15 @@
+<!DOCTYPE html><html><head><title>Khata Dashboard</title></head>
+<body style="font-family:sans-serif;padding:20px">
+<h1>Khata Bot Dashboard</h1>
+<div id="stats"></div>
+<script>
+fetch('/dashboard/stats').then(r=>r.json()).then(d=>{
+  document.getElementById('stats').innerHTML = `
+    <p>Total Sales: PKR ${d.totalSales}</p>
+    <p>Total Pending: PKR ${d.totalPending}</p>
+    <p>Orders Today: ${d.ordersToday}</p>
+    <h3>Recent Orders</h3>
+    <ul>${d.recentOrders.map(o=>`<li>${o.customer.name||o.customer.phone} — PKR ${o.total} — ${o.status}</li>`).join('')}</ul>`;
+});
+</script>
+</body></html>

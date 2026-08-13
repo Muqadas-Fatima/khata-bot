@@ -1,0 +1,54 @@
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Customer {
+  id           String   @id @default(cuid())
+  phone        String   @unique
+  name         String?
+  shopName     String?
+  awaitingName Boolean  @default(true)
+  orders       Order[]
+}
+
+model Product {
+  id     String  @id @default(cuid())
+  name   String
+  price  Float
+  active Boolean @default(true)
+}
+
+model Order {
+  id         String      @id @default(cuid())
+  customerId String
+  customer   Customer    @relation(fields: [customerId], references: [id])
+  items      OrderItem[]
+  total      Float
+  status     String      @default("UNPAID")
+  createdAt  DateTime    @default(now())
+  payments   Payment[]
+}
+
+model OrderItem {
+  id      String @id @default(cuid())
+  orderId String
+  order   Order  @relation(fields: [orderId], references: [id])
+  name    String
+  price   Float
+  qty     Int
+}
+
+model Payment {
+  id            String   @id @default(cuid())
+  orderId       String
+  order         Order    @relation(fields: [orderId], references: [id])
+  amount        Float
+  screenshotUrl String?
+  status        String   @default("PENDING_VERIFICATION")
+  createdAt     DateTime @default(now())
+}
