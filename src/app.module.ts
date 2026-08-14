@@ -1,4 +1,6 @@
 import { Module } from '@nestjs/common';
+import { AppController } from './app.controller';
+import { AppService } from './app.service';
 import { MessagesController } from './messages/messages.controller';
 import { OrdersController } from './orders/orders.controller';
 import { DashboardController } from './dashboard/dashboard.controller';
@@ -12,7 +14,7 @@ import { CustomersService } from './customers/customers.service';
 import { NotificationsService } from './notifications/notifications.service';
 
 @Module({
-  controllers: [MessagesController, OrdersController, DashboardController, NotificationsController],
-  providers: [PrismaService, AiService, OrdersService, CatalogueService, PaymentsService, CustomersService, NotificationsService],
+  controllers: [AppController, MessagesController, OrdersController, DashboardController, NotificationsController],
+  providers: [AppService, PrismaService, AiService, OrdersService, CatalogueService, PaymentsService, CustomersService, NotificationsService],
 })
 export class AppModule {}
