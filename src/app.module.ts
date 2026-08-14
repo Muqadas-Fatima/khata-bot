@@ -1,3 +1,6 @@
+import { SentryModule } from '@sentry/nestjs/setup';
+import { APP_FILTER } from '@nestjs/core';
+import { SentryGlobalFilter } from '@sentry/nestjs/setup';
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
@@ -14,6 +17,7 @@ import { CustomersService } from './customers/customers.service';
 import { NotificationsService } from './notifications/notifications.service';
 
 @Module({
+  imports: [SentryModule.forRoot()],
   controllers: [AppController, MessagesController, OrdersController, DashboardController, NotificationsController],
   providers: [AppService, PrismaService, AiService, OrdersService, CatalogueService, PaymentsService, CustomersService, NotificationsService],
 })
